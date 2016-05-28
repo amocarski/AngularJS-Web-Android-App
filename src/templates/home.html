@@ -1,6 +1,41 @@
-<section class="section container-fluid">
-  <h1 class="page-header">name {{main.location}}</h1>  
-  <div ng-repeat="user in main.users">
-  {{user}}
-  </div>
+<section class="section container-fluid" ng-init="switch = true" ui-state id="weatherSwitch"  ui-prevent-touchmove-defaults>
+	<h1 class="page-header section">
+		<div ng-if="switch === true">Miasto {{main.location}}</div> 
+		<div ng-if="switch === false">Miasto {{main.location2}}</div>
+	</h1>
+	<div class="scrollable section" style="top: 77px; padding-bottom: 52px">
+		<div class="scrollable-header section">
+			<div class="btn-group justified nav-tabs">
+			  <a ui-turn-off="weatherSwitch" ui-class="{'active': !weatherSwitch}" class="btn btn-default active" ng-click="switch = true">Aktualna pogoda</a>
+			  <a ui-turn-on="weatherSwitch" ui-class="{'active': weatherSwitch}" class="btn btn-default" ng-click="switch = false">Wybierz miasto</a>
+			</div>
+
+			<div ng-if="switch === true">
+				<div class="list-group">
+					<div class="list-group-item">Temp. max = {{main.tempMax}}</div>
+					<div class="list-group-item">Temp. min = {{main.tempMin}}</div>
+					<div class="list-group-item">Wilgotność = {{main.humidity}} %</div>
+					<div class="list-group-item">Opis = {{main.weatherDescription}}</div>
+		  		</div>
+			</div>
+
+			<!-- <div ng-if="switch !== true"> -->
+			<div class="section">
+				<form name="changeCityForm" ng-submit="main.submit(changeCityForm.$valid)" ng-if="switch !== true">
+				  <input type="text" ng-model="main.cityName" placeholder="Wpisz miasto" class="form-control">
+				  <input type="submit" value="Pokaż" class="btn btn-block btn-primary">
+				</form>
+ 				  <!-- <a class="btn btn-default" ng-click="main.submit()">Pokaż</a> -->
+			</div>
+		</div>
+		<div class="scrollable-content" ng-if="switch !== true">
+			<div class="list-group" ng-repeat="day in main.days">
+				<div class="section-wide"><b>{{day.dt_txt}}</b></div>
+				<div class="list-group-item ng-scope">Temp. max = {{day.main.temp_max}}</div>
+				<div class="list-group-item ng-scope">Temp. min = {{day.main.temp_min}}</div>
+				<div class="list-group-item ng-scope">Wilgotność = {{day.main.humidity}} %</div>
+			</div>
+		</div>
+			<!-- </div> -->
+	</div>
 </section>

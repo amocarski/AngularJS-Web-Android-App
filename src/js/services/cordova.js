@@ -1,13 +1,17 @@
 angular.module('MyApp.services.Cordova', [])
 
-.factory('deviceReady', function($log){
+.factory('deviceReady', deviceReady);
+
+function deviceReady($log, $rootScope){
   return function(done) {
     if (typeof window.cordova === 'object') {
-      document.addEventListener('deviceready', function () {
+      document.addEventListener('deviceready', deviceready, false);
+
+      function deviceready() {
         done();
-      }, false);
+      }
     } else {
       done();
     }
   };
-});
+}

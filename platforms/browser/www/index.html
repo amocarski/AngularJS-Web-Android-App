@@ -13,8 +13,23 @@
     <script src="http://localhost:8001/target/target-script-min.js"></script>
     <script src="cordova.js"></script>
     <script src="js/app.min.js"></script>
+<!--     <script>
+      angular.element(document).ready(function () {
+        if (window.cordova) {
+          console.log("Running in Cordova, will bootstrap AngularJS once 'deviceready' event fires.");
+          document.addEventListener('deviceready', function () {
+            console.log("Deviceready event has fired, bootstrapping AngularJS.");
+            angular.bootstrap(document.body, ['MyApp']);
+          }, false);
+        } else {
+          console.log("Running in browser, bootstrapping AngularJS now.");
+          angular.bootstrap(document.body, ['MyApp']);
+        }
+      });
+    </script> -->
   </head>
-  <body ng-app="MyApp" ng-controller="MainController">
+  <body ng-app="MyApp">
+    <!-- <body> -->
 
     <!-- Sidebars -->
     <div ng-include="'sidebar.html'" 
@@ -52,14 +67,11 @@
       <!-- App Body -->
       <div class="app-body">
         <div class="app-content">
-          <ng-view>
-          test {{name}}
-          </ng-view>  
+          <ng-view></ng-view>  
         </div>
       </div>
 
     </div><!-- ~ .app -->
-
     <div ui-yield-to="modals"></div>
   </body>
 </html>
